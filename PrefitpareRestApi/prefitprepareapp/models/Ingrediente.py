@@ -10,4 +10,4 @@ class Ingrediente(ModeloBase):
     origenPais = models.CharField(max_length=40)
 
     def __str__(self):
-        return generarMensajeMapeoObjeto(self, 3)
+        return generarMensajeMapeoObjeto(3) + " " + self.nombre

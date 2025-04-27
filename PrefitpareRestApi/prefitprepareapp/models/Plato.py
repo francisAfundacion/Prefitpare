@@ -11,4 +11,4 @@ class Plato(ModeloBase):
     origenPais = models.CharField(max_length=40)
 
     def __str__(self):
-        return generarMensajeMapeoObjeto(self,4)
+        return generarMensajeMapeoObjeto(4) + " " + self.nombre
