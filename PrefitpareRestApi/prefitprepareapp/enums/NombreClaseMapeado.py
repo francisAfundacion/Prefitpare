@@ -5,6 +5,7 @@ class NombreClaseMapeado(Enum):
     PERSONATIPO = 2
     INGREDIENTE = 3
     PLATO = 4
+    USUARIO = 5
 
 def comprobarOpcionClase(numNombreClase):
         return numNombreClase in NombreClaseMapeado._value2member_map_
