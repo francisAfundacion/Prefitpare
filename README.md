@@ -37,6 +37,11 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
 
 1. Python
 2. Django
+3. rest_framework
+4. drf_yasg
+5. Sqlite3
+6. rest_framework.authToken
+7. VirtualEnv
 
 ## Acceso al Proyecto
 
