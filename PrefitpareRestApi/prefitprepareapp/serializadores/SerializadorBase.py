@@ -2,8 +2,10 @@ from rest_framework import serializers
 from rest_framework.generics import get_object_or_404
 from prefitprepareapp.models import  ModeloBase
 from prefitprepareapp.models import Categoria
-from prefitprepareapp.models import PersonaTipo
+from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.models import Ingrediente
+from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+from prefitprepareapp.infraestructura.GestorConsulta import GestorConsulta
 
 
 # Agregar comprobacion de existencia de los registros post, put, patch
@@ -12,44 +14,52 @@ from prefitprepareapp.models import Ingrediente
 
 class SerializadorBase(serializers.ModelSerializer):
 
-    def crear(self, **kwargs):
-        #Optimizable los if y los pop
-        if self.es_modelo_NM():
-            categorias = self.generar_cuerpo_categorias(kwargs)
-            kwargs.pop('categorias', None)
+    servicio_serializador = ServicioSerializadorBase()
+    gestor_consulta = GestorConsulta()
 
+    def obtener_campo_fk(self, campo_fk):
+        return self.Meta.model._meta.get_field(campo_fk)
+
+    def es_ingrediente(self):
+        return self.Meta.model.__name__ == 'Ingrediente'
+
+    def es_plato(self):
+        return self.Meta.model.__name__ == 'Plato'
+
+    def es_modelo_NM(self):
+        return self.es_plato() or self.es_ingrediente()
+
+    def crear(self, **kwargs):
+        if self.es_modelo_NM():
+            lista_categorias = kwargs.pop('categorias')
             if self.es_plato():
-                lista_tipos_persona = self.generar_cuerpo_personas_tipos(kwargs)
-                lista_ingredientes_nombres = self.generar_cuerpo_ingredientes(kwargs)
-                # Pensar crear método pop personalizado
-                kwargs.pop('tipos_persona', None)
-                kwargs.pop('ingredientes', None)
+                lista_tipos_persona = kwargs.pop('tipos_persona')
+                lista_ingredientes = kwargs.pop('ingredientes')
 
         objeto = self.Meta.model.objects.create(**kwargs)
 
         if self.es_modelo_NM():
-            self.asociar_lista_categorias(objeto, categorias)
-
+            self.servicio_serializador.asociar_lista_fk(objeto, lista_categorias, Categoria, 'categoria')
             if self.es_plato():
-                self.asociar_lista_ingredientes(objeto, lista_ingredientes_nombres)
-                self.asociar_lista_personas_tipos(objeto,lista_tipos_persona)
+                self.servicio_serializador.asociar_lista_fk(objeto, lista_ingredientes, Ingrediente, 'ingrediente')
+                self.servicio_serializador.asociar_lista_fk(objeto, lista_tipos_persona, TipoPersona, 'tipo_persona')
 
         return objeto
 
-
     def modificar(self, id, **kwargs):
 
-        objeto = self.Meta.model.objects.get(id=id)
+        objeto = self.gestor_consulta.get_objeto_por_id(id, self.Meta.model)
 
         # Cogemos los datos de las N:M
+        # TO-DO: Globalizar lógica de generar lista de nombres de las fk a modificar
         if self.es_modelo_NM():
-            categorias_instancias = self.crear_lista_categorias(self.generar_cuerpo_categorias(kwargs))
-
+            lista_objetos_nombres_fk = self.servicio_serializador.generar_objetos_nombres_fk(kwargs, 'categorias')
+            categorias_instancias = self.gestor_consulta.get_lista_objetos(lista_objetos_nombres_fk, Categoria)
             if self.es_plato():
-                tipos_persona_instancias = self.crear_lista_personas_tipos(self.generar_cuerpo_personas_tipos(kwargs))
-                print(tipos_persona_instancias.exists())
-                print("Tipos de Persona Instancias:", tipos_persona_instancias)
-                ingredientes_instancias =  self.crear_lista_ingredientes(self.generar_cuerpo_ingredientes(kwargs))
+                lista_objetos_nombres_fk = self.servicio_serializador.generar_objetos_nombres_fk(kwargs, 'tipos_persona')
+                tipos_persona_instancias = self.gestor_consulta.get_lista_objetos(lista_objetos_nombres_fk , TipoPersona)
+                lista_objetos_nombres_fk = self.servicio_serializador.generar_objetos_nombres_fk(kwargs, 'ingredientes')
+                ingredientes_instancias = self.gestor_consulta.get_lista_objetos(lista_objetos_nombres_fk, Ingrediente)
 
         # Modificamos los campos que no son N:M
         for campo_modelo in self.Meta.fields:
@@ -61,71 +71,24 @@ class SerializadorBase(serializers.ModelSerializer):
             objeto.categoria.set(categorias_instancias)
 
             if self.es_plato():
-                print(tipos_persona_instancias.exists())
-                for tipo_persona in tipos_persona_instancias:
-                    print(tipo_persona.nombre)
-                objeto.personaTipo.set(tipos_persona_instancias)
+                objeto.tipo_persona.set(tipos_persona_instancias)
                 objeto.ingrediente.set(ingredientes_instancias)
 
         objeto.save()
 
         return objeto
 
-    def obtener_campo_fk(self, campo_fk):
-        return self.Meta.model._meta.get_field(campo_fk)
+    #TO-DO hacer metodo que acepete un tipo de modelo y devuelva el return de si es ese en cuestion
 
     def eliminar(self, id):
-        self.Meta.model.objects.get(id=id).delete()
+        self.gestor_consulta.get_objeto_por_id(id, self.Meta.model).delete()
 
-    def crear_lista_categorias(self, cuerpo_categorias_nombres):
-        return Categoria.objects.filter(nombre__in=cuerpo_categorias_nombres)
 
-    # Pensar si que siempre me dé una lista y un json en caso que solo tenga una categoría (A futuro)
-    # Pensar optimizar los asociar
 
-    ##Pensar en asumir la logica de las consultas con una interfaz e implementación por cada clase o una clase abstracta y una clase implementacion llamada consulta
 
-    def asociar_lista_categorias(self, objeto, categorias):
-        categorias_sql = self.crear_lista_categorias(categorias)
-        objeto.categoria.set(categorias_sql)
 
-    def generar_cuerpo_categorias(self, kwargs):
-        cuerpo_categorias_nombres = [categoria['categoria'] for categoria in kwargs['categorias']]
-        return cuerpo_categorias_nombres
 
-    def generar_cuerpo_personas_tipos(self, kwargs):
-        cuerpo_personas_tipos = [persona_tipo['tipo_persona'] for persona_tipo in kwargs['tipos_persona']]
-        return cuerpo_personas_tipos
 
-    def crear_lista_personas_tipos(self, lista_tipos_persona):
-        return PersonaTipo.objects.filter(nombre__in=lista_tipos_persona)
-
-    def asociar_lista_personas_tipos (self, objeto, lista_tipos_persona):
-        personas_tipo_sql = self.crear_lista_personas_tipos(lista_tipos_persona)
-        objeto.personaTipo.set(personas_tipo_sql)
-
-    def generar_cuerpo_ingredientes(self, kwargs):
-        lista_ingredientes_nombres = [ingrediente['ingrediente'] for ingrediente in kwargs['ingredientes']]
-        return lista_ingredientes_nombres
-
-    def crear_lista_ingredientes(self, lista_ingredientes_nombres):
-        return Ingrediente.objects.filter(nombre__in=lista_ingredientes_nombres)
-
-    def asociar_lista_ingredientes(self, objeto, lista_ingredientes_nombres):
-        ingredientes_sql = self.crear_lista_ingredientes(lista_ingredientes_nombres)
-        objeto.ingrediente.set(ingredientes_sql)
-
-    # Ver como hace entendinble el primero para que tambien se lea que sea como NM
-    # Revisar optimizar las comprobaciones de adelante
-
-    def es_ingrediente(self):
-        return self.Meta.model.__name__ == 'Ingrediente'
-
-    def es_plato(self):
-        return self.Meta.model.__name__ == 'Plato'
-
-    def es_modelo_NM(self):
-        return  self.es_plato() or self.es_ingrediente()
 
 
 
