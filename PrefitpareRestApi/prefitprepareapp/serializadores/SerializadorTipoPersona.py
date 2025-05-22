@@ -1,5 +1,5 @@
 from .SerializadorBase import SerializadorBase
-from prefitprepareapp.models import PersonaTipo
+from prefitprepareapp.models import TipoPersona
 
 class SerializadorPersonaTipo(SerializadorBase):
 

@@ -7,11 +7,11 @@ class NombreClaseMapeado(Enum):
     PLATO = 4
     USUARIO = 5
 
-def comprobarOpcionClase(numNombreClase):
+def comprobar_opcion_clase(numNombreClase):
         return numNombreClase in NombreClaseMapeado._value2member_map_
 
-def generarMensajeMapeoObjeto(numNombreClase):
-        if not comprobarOpcionClase(numNombreClase):
+def generar_mensaje_mapeo_objeto(numNombreClase):
+        if not comprobar_opcion_clase(numNombreClase):
             return (f"El valor introducido como argumento para generar un mensaje acorde a un número entero "
                     f"que se asocia al nombre de una clase es erróneo.\nLos únicos valores admitidos están"
                     f"comprendidos en el siguiente rango de valores: (1-{len(NombreClaseMapeado)})")

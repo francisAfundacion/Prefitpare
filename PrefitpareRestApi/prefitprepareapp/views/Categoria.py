@@ -9,6 +9,7 @@ from prefitprepareapp.serializadores.SerializadorCategoria import SerializadorCa
 import datetime
 
 class listarCategoriasAPIView(APIView):
+
     def get(self, request):
         lista_categorias = Categoria.objects.all()
         serializador_categoria = SerializadorCategoria(lista_categorias, many=True)

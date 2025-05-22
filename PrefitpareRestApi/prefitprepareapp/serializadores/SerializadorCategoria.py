@@ -5,7 +5,7 @@ class SerializadorCategoria(SerializadorBase):
 
     class Meta:
         model = Categoria
-        fields = ['id', 'nombre', 'descripcion', 'fechaInsercion']
+        fields = ['id', 'nombre', 'descripcion', 'fecha_insercion']
 
     def crear(self, **kwargs):
         return super().crear(**kwargs)

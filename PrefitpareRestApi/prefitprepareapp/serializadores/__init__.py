@@ -1,4 +1,4 @@
 from . import SerializadorCategoria
 from . import SerializadorPlato
 from . import SerializadorIngrediente
-from . import SerializadorPersonaTipo
+from . import SerializadorTipoPersona
