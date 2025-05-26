@@ -4,7 +4,7 @@ from ..models.Categoria import Categoria
 from django.db import models
 
 class Ingrediente(ModeloBase):
-    categoria = models.ManyToManyField(Categoria)
+    categorias = models.ManyToManyField(Categoria)
     peso = models.DecimalField(max_digits=3, decimal_places=2)
     kcal_por_gramo = models.DecimalField(max_digits=5, decimal_places=2)
     origen_pais = models.CharField(max_length=40)

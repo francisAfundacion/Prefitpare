@@ -6,9 +6,9 @@ from ..models.TipoPersona import TipoPersona
 from django.db import models
 
 class Plato(ModeloBase):
-    categoria = models.ManyToManyField(Categoria)
-    tipo_persona = models.ManyToManyField(TipoPersona)
-    ingrediente = models.ManyToManyField(Ingrediente)
+    categorias = models.ManyToManyField(Categoria)
+    tipos_persona = models.ManyToManyField(TipoPersona)
+    ingredientes = models.ManyToManyField(Ingrediente)
     peso = models.DecimalField(max_digits=3, decimal_places=2) #Campo decimal 2.23 => kg
     origen_pais = models.CharField(max_length=40)
 
