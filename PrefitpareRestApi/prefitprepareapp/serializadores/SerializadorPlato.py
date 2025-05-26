@@ -8,13 +8,13 @@ class SerializadorPlato(SerializadorBase):
 
     #Futuro control que el ingrediente no tenga mayor peso que el propio plato
 
-    ingrediente = SerializadorIngrediente(many=True)
-    categoria = SerializadorCategoria(many=True)
-    tipo_persona = SerializadorTipoPersona(many=True)
+    ingredientes = SerializadorIngrediente(many=True)
+    categorias = SerializadorCategoria(many=True)
+    tipos_persona = SerializadorTipoPersona(many=True)
 
     class Meta:
         model = Plato
-        fields = ['id', 'nombre', 'descripcion', 'fecha_insercion', 'ingrediente', 'categoria', 'tipo_persona', 'peso', 'origen_pais']
+        fields = ['id', 'nombre', 'descripcion', 'fecha_insercion', 'ingredientes', 'categorias', 'tipos_persona', 'peso', 'origen_pais']
 
     def crear(self, **kwargs):
         return super().crear(**kwargs)

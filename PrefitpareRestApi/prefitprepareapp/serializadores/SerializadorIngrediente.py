@@ -5,11 +5,11 @@ from prefitprepareapp.models import Ingrediente
 
 class SerializadorIngrediente(SerializadorBase):
 
-    categoria = SerializadorCategoria(many=True)
+    categorias = SerializadorCategoria(many=True)
 
     class Meta:
         model = Ingrediente
-        fields = ['id', 'nombre','descripcion', 'fecha_insercion', 'categoria', 'peso', 'kcal_por_gramo', 'origen_pais']
+        fields = ['id', 'nombre','descripcion', 'fecha_insercion', 'categorias', 'peso', 'kcal_por_gramo', 'origen_pais']
 
     def crear(self, **kwargs):
         return super().crear(**kwargs)
