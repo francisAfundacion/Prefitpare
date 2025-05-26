@@ -1,12 +1,7 @@
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.views import ObtainAuthToken
 from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.serializadores.SerializadorTipoPersona import SerializadorTipoPersona
-import datetime
 
 class listarPersonaTipoAPIView(APIView):
     def get(self, request):

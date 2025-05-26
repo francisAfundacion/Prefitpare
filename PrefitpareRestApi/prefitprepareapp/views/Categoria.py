@@ -1,12 +1,7 @@
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.views import ObtainAuthToken
 from prefitprepareapp.models import Categoria
 from prefitprepareapp.serializadores.SerializadorCategoria import SerializadorCategoria
-import datetime
 
 class listarCategoriasAPIView(APIView):
 
@@ -37,7 +32,7 @@ class eliminarCategoriaAPIView(APIView):
     def delete(self, request, id):
         serializador_categoria = SerializadorCategoria()
         serializador_categoria.eliminar(id)
-        return JsonResponse({"id": id, "mensaje": "Categoría eliminada con éxito."})
+        return Response({"id": id, "mensaje": "Categoría eliminada con éxito."})
 
 
 

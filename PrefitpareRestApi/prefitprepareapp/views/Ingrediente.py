@@ -1,12 +1,7 @@
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.views import ObtainAuthToken
 from prefitprepareapp.models import Ingrediente
 from prefitprepareapp.serializadores.SerializadorIngrediente import SerializadorIngrediente
-import datetime
 
 class listarIngredientesAPIView(APIView):
     def get(self, request):
@@ -36,4 +31,4 @@ class eliminarIngredienteAPIView(APIView):
     def delete(self, request, id):
         serializador_ingrediente = SerializadorIngrediente()
         serializador_ingrediente.eliminar(id)
-        return JsonResponse({"id": id, "mensaje": "Ingrediente eliminada con éxito."})
+        return Response({"id": id, "mensaje": "Ingrediente eliminada con éxito."})

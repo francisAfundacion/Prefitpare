@@ -15,15 +15,11 @@ class GestorConsulta:
 
     def crear_objeto(self, datos_instancia):
 
-        print("CREAR OBJETO")
         modelo = datos_instancia.get('modelo')
         campos = datos_instancia.get('campos')
         relaciones = datos_instancia.get('relaciones')
-        print(relaciones)
 
         objeto = modelo.objects.create(**campos)
-
-        print(f"EN CREAR OBJETO de GESTOR CONSULTAS => ", objeto)
 
         if not relaciones:
             return objeto
@@ -34,13 +30,6 @@ class GestorConsulta:
             #ya tengo la ref, entonces hago el cambio sin indicar explicitamente el objeto
             relacion.set(lista_objetos)
 
-        print("PROBANDO PROBANDO  QUE TENGA TODOS LOS VALORES BIEN ASIGNADOS")
-        for field in objeto._meta.fields:
-            nombre_campo = field.name
-            valor = getattr(objeto, nombre_campo)
-            print(f"{nombre_campo}: {valor}")
-
-
         return objeto
 
     def modificar_objeto(self, id, modelo, kwargs, datos):
@@ -48,12 +37,6 @@ class GestorConsulta:
         objeto = self.get_objeto_por_id(id, modelo)
 
         self.modificar_campos(modelo, objeto, kwargs, datos)
-        print("VISUALIZO MODIFICAR_OBJETOS")
-        print(objeto)
-        for field in objeto._meta.fields:
-            nombre_campo = field.name
-            valor = getattr(objeto, nombre_campo)
-            print(f"{nombre_campo}: {valor}")
 
         objeto.save()
 

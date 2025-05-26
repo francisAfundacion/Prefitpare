@@ -1,13 +1,7 @@
-
-from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import BasePermission
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.authtoken.views import ObtainAuthToken
 from prefitprepareapp.models import Plato
 from prefitprepareapp.serializadores.SerializadorPlato import SerializadorPlato
-import datetime
 
 class listarPlatosAPIView(APIView):
 
