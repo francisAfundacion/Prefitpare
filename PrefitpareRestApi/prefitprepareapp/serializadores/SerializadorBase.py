@@ -23,6 +23,9 @@ class SerializadorBase(serializers.ModelSerializer):
     def modificar(self, id, **kwargs):
         return self.servicio.modificar(id, kwargs, self.Meta.model)
 
+    def eliminar(self, id):
+        return self.servicio.eliminar(id, self.Meta.model)
+
 
 
 
