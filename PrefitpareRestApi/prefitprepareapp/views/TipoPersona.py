@@ -2,23 +2,28 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.serializadores.SerializadorTipoPersona import SerializadorTipoPersona
+from prefitprepareapp.swaggerEjemplos.tipo_persona import *
+from drf_yasg.utils import swagger_auto_schema
 
 class listarPersonaTipoAPIView(APIView):
+    @swagger_auto_schema(**swagger_listar_tipos_persona)
     def get(self, request):
         lista_personas_tipos = TipoPersona.objects.all()
         serializador_persona_tipo = SerializadorTipoPersona(lista_personas_tipos, many=True)
         return Response(serializador_persona_tipo.data)
 
 class crearPersonaTipoAPIView(APIView):
+    @swagger_auto_schema(**swagger_crear_tipo_persona)
     def post(self, request):
         serializador_persona_tipo =  SerializadorTipoPersona()
         nuevo_tipo_persona = serializador_persona_tipo.crear(**request.data)
         return Response({'id': nuevo_tipo_persona.id, "mensaje": "Tipo de persona creado con éxito."}, status=201)
 
 class modificarPersonaTipoAPIView(APIView):
+    @swagger_auto_schema(**swagger_modificar_tipo_persona)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
-
+    @swagger_auto_schema(**swagger_modificar_tipo_persona)
     def patch(self, request, id):
             return self.modificarAPIView(request, id)
 
@@ -28,6 +33,7 @@ class modificarPersonaTipoAPIView(APIView):
         return Response({"categoria_id": persona_tipo_modif.id, "nombre_nuevo": persona_tipo_modif.nombre, "mensaje":"El tipo de persona ha sido actualizado con éxito."}, status=200)
 
 class eliminarPersonaTipoAPIView(APIView):
+    @swagger_auto_schema(**swagger_eliminar_tipo_persona)
     def delete(self, request, id):
         serializador_persona_tipo =  SerializadorTipoPersona()
         serializador_persona_tipo.eliminar(id)

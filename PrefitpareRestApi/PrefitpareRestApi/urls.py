@@ -40,6 +40,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('listar/categorias', listarCategoriasAPIView.as_view(), name='listar-categorias'),
     path('crear/categoria', crearCategoriaAPIView.as_view(), name='crear-categoria'),
     path('modificar/categoria/<int:id>', modificarCategoriaAPIView.as_view(), name='modificar-categoria'),

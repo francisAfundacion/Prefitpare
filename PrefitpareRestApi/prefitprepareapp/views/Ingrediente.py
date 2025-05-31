@@ -2,23 +2,29 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from prefitprepareapp.models import Ingrediente
 from prefitprepareapp.serializadores.SerializadorIngrediente import SerializadorIngrediente
+from prefitprepareapp.swaggerEjemplos.ingrediente import *
+from drf_yasg.utils import swagger_auto_schema
+
 
 class listarIngredientesAPIView(APIView):
+    @swagger_auto_schema(**swagger_listar_ingredientes)
     def get(self, request):
         lista_ingredientes = Ingrediente.objects.all()
         serializador_ingrediente = SerializadorIngrediente(lista_ingredientes, many=True)
         return Response(serializador_ingrediente.data)
 
 class crearIngredienteAPIView(APIView):
+    @swagger_auto_schema(**swagger_crear_ingrediente)
     def post(self, request):
         serializador_ingrediente= SerializadorIngrediente()
         nuevo_ingrediente = serializador_ingrediente.crear(**request.data)
         return Response({'id': nuevo_ingrediente.id, "mensaje": "Ingrediente creado con éxito."}, status=201)
 
 class modificarIngredienteAPIView(APIView):
+    @swagger_auto_schema(**swagger_modificar_ingrediente)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
-
+    @swagger_auto_schema(**swagger_modificar_ingrediente)
     def patch(self, request, id):
             return self.modificarAPIView(request, id)
 
@@ -28,6 +34,7 @@ class modificarIngredienteAPIView(APIView):
         return Response({"categoria_id": categoria_modif.id, "nombre_nuevo": categoria_modif.nombre, "mensaje":"El ingrediente ha sido actualizado con éxito."}, status=200)
 
 class eliminarIngredienteAPIView(APIView):
+    @swagger_auto_schema(**swagger_eliminar_ingrediente)
     def delete(self, request, id):
         serializador_ingrediente = SerializadorIngrediente()
         serializador_ingrediente.eliminar(id)
