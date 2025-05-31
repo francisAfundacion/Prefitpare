@@ -22,7 +22,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.permissions import AllowAny
 from prefitprepareapp.views.Categoria import *
 from prefitprepareapp.views.Ingrediente import *
-from prefitprepareapp.views.PersonaTipo import *
+from prefitprepareapp.views.TipoPersona import *
 from prefitprepareapp.views.Plato import *
 
 

@@ -1,11 +1,11 @@
 from .SerializadorBase import SerializadorBase
-from prefitprepareapp.models import PersonaTipo
+from prefitprepareapp.models import TipoPersona
 
-class SerializadorPersonaTipo(SerializadorBase):
+class SerializadorTipoPersona(SerializadorBase):
 
     class Meta:
-        model = PersonaTipo
-        fields = ['id', 'nombre', 'descripcion', 'fechaInsercion']
+        model = TipoPersona
+        fields = ['id', 'nombre', 'descripcion', 'fecha_insercion']
 
     def crear(self, **kwargs):
         return super().crear(**kwargs)
