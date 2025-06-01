@@ -3,6 +3,7 @@ from prefitprepareapp.models import Categoria
 from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.models import Plato
 from prefitprepareapp.models import Ingrediente
+from .http import levantar_404_si_falla
 
 
 class ServicioSerializadorBase:
@@ -14,6 +15,7 @@ class ServicioSerializadorBase:
         'Ingrediente': ['categorias'],
     }
 
+    @levantar_404_si_falla
     def crear(self, kwargs, modelo):
 
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
@@ -26,6 +28,7 @@ class ServicioSerializadorBase:
 
         return self.gestor_bd.crear_objeto(datos_instancia)
 
+    @levantar_404_si_falla
     def modificar(self, id, kwargs, modelo):
 
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
@@ -37,7 +40,6 @@ class ServicioSerializadorBase:
         }
 
         return  self.gestor_bd.modificar_objeto(id, modelo, kwargs, datos)
-
 
     #modelo._meta.local_many_to_many => filtra automáticamente los campos definidos del modelo
     def construir_objetos_fk(self, kwargs, modelo):
@@ -51,16 +53,13 @@ class ServicioSerializadorBase:
                     modelo_relacion, lista_diccionarios
                 )
         return objetos_relaciones_nm
-
-    def obtener_lista_objetos(self, modelo, lista_nombres):
-        return self.gestor_bd.get_objetos_por_nombres(modelo, lista_nombres)
-
     def convertir_objetos_fk(self, modelo, lista_diccionarios_fk):
 
         nombres_fk = [diccionario.get('nombre') for diccionario in lista_diccionarios_fk]
 
         return self.gestor_bd.get_lista_objetos(modelo, nombres_fk)
 
+    @levantar_404_si_falla
     def eliminar(self, id, modelo):
         self.gestor_bd.eliminar_objeto(id, modelo)
 
@@ -76,6 +75,8 @@ class ServicioSerializadorBase:
     def es_modelo_NM(self, modelo):
         return self.es_plato(modelo) or self.es_ingrediente(modelo)
 
+    def conseguir_objetos_modelo(self, modelo):
+        return self.gestor_bd.get_objetos(modelo)
 
 
 

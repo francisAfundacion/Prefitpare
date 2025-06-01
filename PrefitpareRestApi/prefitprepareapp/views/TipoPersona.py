@@ -5,13 +5,15 @@ from prefitprepareapp.serializadores.SerializadorTipoPersona import Serializador
 from prefitprepareapp.swaggerEjemplos.tipo_persona import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
+from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+
 
 class listarPersonaTipoAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_tipos_persona)
     def get(self, request):
-        lista_personas_tipos = TipoPersona.objects.all()
-        serializador_persona_tipo = SerializadorTipoPersona(lista_personas_tipos, many=True)
-        return Response(serializador_persona_tipo.data)
+        servicio = ServicioSerializadorBase()
+        serializador_tipo_persona = SerializadorTipoPersona(servicio.conseguir_objetos_modelo(TipoPersona), many=True)
+        return Response(serializador_tipo_persona .data)
 
 class crearPersonaTipoAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]

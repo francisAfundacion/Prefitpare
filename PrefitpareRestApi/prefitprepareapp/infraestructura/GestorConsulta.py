@@ -1,11 +1,10 @@
-from typing import Type
-from django.db.models import Model
+from rest_framework.authtoken.models import Token
+
 
 class GestorConsulta:
 
-    def get_lista_objetos(self, modelo, lista_nombre_fk):
-        return modelo.objects.filter(nombre__in=lista_nombre_fk)
-
+    def get_objetos(self, modelo):
+        return modelo.objects.all()
 
     def get_objeto_por_id(self, id, modelo):
         return modelo.objects.get(id=id)
@@ -55,6 +54,11 @@ class GestorConsulta:
     def modificar_campos_nm(self, modelo, objeto, kwargs, datos_fk):
         for nombre_relacion, lista_objetos in datos_fk.get('relaciones').items():
             getattr(objeto, nombre_relacion).set(lista_objetos)
+
+    def crear_token(self, instance):
+        return Token.objects.create(user=instance)
+
+
 
 
 

@@ -5,12 +5,13 @@ from prefitprepareapp.serializadores.SerializadorCategoria import SerializadorCa
 from prefitprepareapp.swaggerEjemplos.categoria import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
+from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
 
 class listarCategoriasAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_categorias)
     def get(self, request):
-        lista_categorias = Categoria.objects.all()
-        serializador_categoria = SerializadorCategoria(lista_categorias, many=True)
+        servicio =  ServicioSerializadorBase()
+        serializador_categoria = SerializadorCategoria(servicio.conseguir_objetos_modelo(Categoria), many=True)
         return Response(serializador_categoria.data)
 
 class crearCategoriaAPIView(APIView):

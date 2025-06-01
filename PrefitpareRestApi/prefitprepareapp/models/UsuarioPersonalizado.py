@@ -9,7 +9,7 @@ class UsuarioPersonalizado(AbstractUser):
     ]
     telefono = models.CharField( max_length=9)
     nombre = models.CharField( max_length=50)
-    rol = models.CharField( choices=ROLES, default='estandar')
+    rol = models.CharField( choices=ROLES, default='estandar', max_length=8)
     #A futuro tendremos una imagen de perfil por defecto.
     imagen_perfil = models.URLField( null=True, blank=True)
 

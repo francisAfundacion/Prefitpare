@@ -44,7 +44,7 @@ swagger_modificar_categoria = {
         404: openapi.Response(
             description="Categoría no encontrada.",
             examples={
-                "application/json": {"error": "No se encontró la categoría."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }
@@ -65,7 +65,7 @@ swagger_eliminar_categoria = {
         404: openapi.Response(
             description="Categoría no encontrada.",
             examples={
-                "application/json": {"error": "No se encontró la categoría."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }

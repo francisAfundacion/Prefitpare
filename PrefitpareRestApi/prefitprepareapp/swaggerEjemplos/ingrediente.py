@@ -20,7 +20,7 @@ swagger_crear_ingrediente = {
             examples={
                 "application/json": {
                     "id": 10,
-                    "mensaje": "Ingrediente creada con éxito."
+                    "mensaje": "Ingrediente creado con éxito."
                 }
             }
         )
@@ -44,28 +44,28 @@ swagger_modificar_ingrediente = {
         404: openapi.Response(
             description="Ingrediente no encontrado.",
             examples={
-                "application/json": {"error": "No se encontró el ingrediente con el id especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }
 }
 
 swagger_eliminar_ingrediente = {
-    "operation_description": "Elimina una categoría por su ID.",
+    "operation_description": "Elimina un ingrediente por su ID.",
     "responses": {
         200: openapi.Response(
-            description="Ingrediente eliminada con éxito.",
+            description="Ingrediente eliminado con éxito.",
             examples={
                 "application/json": {
                     "id": 5,
-                    "mensaje": "Categoría eliminada con éxito."
+                    "mensaje": "Ingrediente eliminado con éxito."
                 }
             }
         ),
         404: openapi.Response(
-            description="Categoría no encontrada.",
+            description="Ingrediente no encontrado.",
             examples={
-                "application/json": {"error": "No se encontró la categoría con el id especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }

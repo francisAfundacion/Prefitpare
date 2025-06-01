@@ -5,12 +5,14 @@ from prefitprepareapp.serializadores.SerializadorIngrediente import Serializador
 from prefitprepareapp.swaggerEjemplos.ingrediente import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
+from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+
 
 class listarIngredientesAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_ingredientes)
     def get(self, request):
-        lista_ingredientes = Ingrediente.objects.all()
-        serializador_ingrediente = SerializadorIngrediente(lista_ingredientes, many=True)
+        servicio = ServicioSerializadorBase()
+        serializador_ingrediente = SerializadorIngrediente(servicio.conseguir_objetos_modelo(Ingrediente), many=True)
         return Response(serializador_ingrediente.data)
 
 class crearIngredienteAPIView(APIView):

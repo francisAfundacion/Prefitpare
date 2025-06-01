@@ -5,13 +5,15 @@ from prefitprepareapp.serializadores.SerializadorPlato import SerializadorPlato
 from prefitprepareapp.swaggerEjemplos.plato import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
+from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+
 
 class listarPlatosAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_platos)
     def get(self, request):
-        lista_platos = Plato.objects.all()
-        serializador_platos = SerializadorPlato(lista_platos, many=True)
-        return Response(serializador_platos.data)
+        servicio = ServicioSerializadorBase()
+        serializador_plato = SerializadorPlato(servicio.conseguir_objetos_modelo(Plato), many=True)
+        return Response(serializador_plato.data)
 
 
 class crearPlatoAPIView(APIView):
