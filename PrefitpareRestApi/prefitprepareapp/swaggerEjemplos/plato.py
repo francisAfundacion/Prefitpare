@@ -2,7 +2,7 @@ from drf_yasg import openapi
 from prefitprepareapp.serializadores.SerializadorPlato import SerializadorPlato
 
 swagger_listar_platos= {
-    "operation_description": "Devuelve una lista con todos los ingredientes del sistema.",
+    "operation_description": "Devuelve una lista con todos los platos del sistema.",
     "responses": {
         200: openapi.Response(
             description="Lista de ingredientes.",
@@ -44,28 +44,28 @@ swagger_modificar_plato = {
         404: openapi.Response(
             description="Plato no encontrado.",
             examples={
-                "application/json": {"error": "No se encontró el plato con el ID especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }
 }
 
 swagger_eliminar_plato = {
-    "operation_description": "Elimina una categoría por su ID.",
+    "operation_description": "Elimina un plato por su ID.",
     "responses": {
         200: openapi.Response(
-            description="Ingrediente eliminada con éxito.",
+            description="Plato eliminado con éxito.",
             examples={
                 "application/json": {
                     "id": 5,
-                    "mensaje": "Categoría eliminada con éxito."
+                    "mensaje": "Plato eliminado con éxito."
                 }
             }
         ),
         404: openapi.Response(
-            description="Categoría no encontrada.",
+            description="Plato no encontrado.",
             examples={
-                "application/json": {"error": "No se encontró la categoría con el ID especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }

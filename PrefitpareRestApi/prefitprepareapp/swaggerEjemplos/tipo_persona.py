@@ -44,7 +44,7 @@ swagger_modificar_tipo_persona = {
         404: openapi.Response(
             description="Tipo de persona no encontrado.",
             examples={
-                "application/json": {"error": "No se encontró el tipo de persona con el ID especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }
@@ -65,7 +65,7 @@ swagger_eliminar_tipo_persona = {
         404: openapi.Response(
             description="Tipo de persona no encontrada.",
             examples={
-                "application/json": {"error": "No se encontró el tipo de persona con el ID especificado."}
+                "application/json": {"detail": "No existe el recurso/s solicitado/s acorde al id especificado"}
             }
         )
     }
