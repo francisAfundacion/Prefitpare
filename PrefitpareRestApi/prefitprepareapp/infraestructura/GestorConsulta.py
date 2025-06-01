@@ -52,8 +52,10 @@ class GestorConsulta:
         self.modificar_campos_nm(modelo, objeto,  kwargs, datos_fk)
 
     def modificar_campos_nm(self, modelo, objeto, kwargs, datos_fk):
-        for nombre_relacion, lista_objetos in datos_fk.get('relaciones').items():
-            getattr(objeto, nombre_relacion).set(lista_objetos)
+        relaciones = datos_fk.get('relaciones')
+        if relaciones:
+            for nombre_relacion, lista_objetos in datos_fk.get('relaciones').items():
+                getattr(objeto, nombre_relacion).set(lista_objetos)
 
     def crear_token(self, instance):
         return Token.objects.create(user=instance)

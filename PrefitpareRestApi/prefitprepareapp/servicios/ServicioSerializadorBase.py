@@ -3,7 +3,7 @@ from prefitprepareapp.models import Categoria
 from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.models import Plato
 from prefitprepareapp.models import Ingrediente
-from .http import levantar_404_si_falla
+from .http import levantar_404_si_falla, levantar_400_si_nombre_vacio
 
 
 class ServicioSerializadorBase:
@@ -15,7 +15,7 @@ class ServicioSerializadorBase:
         'Ingrediente': ['categorias'],
     }
 
-    @levantar_404_si_falla
+
     def crear(self, kwargs, modelo):
 
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
@@ -28,9 +28,9 @@ class ServicioSerializadorBase:
 
         return self.gestor_bd.crear_objeto(datos_instancia)
 
-    @levantar_404_si_falla
     def modificar(self, id, kwargs, modelo):
-
+        print("MODIFICAR")
+        print(kwargs)
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
 
         datos = {
@@ -38,7 +38,8 @@ class ServicioSerializadorBase:
             'campos': kwargs,
             'relaciones': relaciones_nm
         }
-
+        print(relaciones_nm)
+        print(datos)
         return  self.gestor_bd.modificar_objeto(id, modelo, kwargs, datos)
 
     #modelo._meta.local_many_to_many => filtra automáticamente los campos definidos del modelo
@@ -47,19 +48,21 @@ class ServicioSerializadorBase:
         objetos_relaciones_nm = {}
 
         for campo_objeto in modelo._meta.local_many_to_many:
-                lista_diccionarios = kwargs.pop(campo_objeto.name)
+            lista_diccionarios = kwargs.pop(campo_objeto.name, None)
+
+            if lista_diccionarios is not None:  # Solo si viene la relación
                 modelo_relacion = campo_objeto.related_model
                 objetos_relaciones_nm[campo_objeto.name] = self.convertir_objetos_fk(
                     modelo_relacion, lista_diccionarios
                 )
+
         return objetos_relaciones_nm
     def convertir_objetos_fk(self, modelo, lista_diccionarios_fk):
 
         nombres_fk = [diccionario.get('nombre') for diccionario in lista_diccionarios_fk]
+        print(self.gestor_bd.get_objetos_por_nombres(modelo, nombres_fk))
+        return self.gestor_bd.get_objetos_por_nombres(modelo, nombres_fk)
 
-        return self.gestor_bd.get_lista_objetos(modelo, nombres_fk)
-
-    @levantar_404_si_falla
     def eliminar(self, id, modelo):
         self.gestor_bd.eliminar_objeto(id, modelo)
 

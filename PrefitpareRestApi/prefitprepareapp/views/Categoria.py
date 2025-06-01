@@ -6,6 +6,8 @@ from prefitprepareapp.swaggerEjemplos.categoria import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+from prefitprepareapp.servicios.http import levantar_404_si_falla, levantar_400_si_nombre_vacio,  levantar_400_si_integridad_falla
+
 
 class listarCategoriasAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_categorias)
@@ -17,6 +19,9 @@ class listarCategoriasAPIView(APIView):
 class crearCategoriaAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_categoria)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def post(self, request):
         serializador_categoria = SerializadorCategoria()
         nueva_categoria = serializador_categoria.crear(**request.data)
@@ -24,10 +29,17 @@ class crearCategoriaAPIView(APIView):
 
 class modificarCategoriaAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
+    @levantar_400_si_integridad_falla
     @swagger_auto_schema(**swagger_modificar_categoria)
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def put(self, request, id):
             return self.modificarAPIView(request, id)
+
+    @levantar_400_si_integridad_falla
     @swagger_auto_schema(**swagger_modificar_categoria)
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def patch(self, request, id):
             return self.modificarAPIView(request, id)
 
@@ -38,7 +50,10 @@ class modificarCategoriaAPIView(APIView):
 
 class eliminarCategoriaAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
+    @levantar_400_si_integridad_falla
     @swagger_auto_schema(**swagger_eliminar_categoria)
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def delete(self, request, id):
         serializador_categoria = SerializadorCategoria()
         serializador_categoria.eliminar(id)

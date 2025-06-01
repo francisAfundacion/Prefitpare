@@ -6,6 +6,8 @@ from prefitprepareapp.swaggerEjemplos.plato import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+from prefitprepareapp.servicios.http import levantar_404_si_falla, levantar_400_si_nombre_vacio,  levantar_400_si_integridad_falla
+
 
 
 class listarPlatosAPIView(APIView):
@@ -19,6 +21,9 @@ class listarPlatosAPIView(APIView):
 class crearPlatoAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_plato)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def post(self, request):
         serializador_platos = SerializadorPlato()
         nuevo_plato = serializador_platos.crear(**request.data)
@@ -27,9 +32,16 @@ class crearPlatoAPIView(APIView):
 class modificarPlatoAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_modificar_plato)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def put(self, request, id):
             return self.modificarAPIView(request, id)
+
     @swagger_auto_schema(**swagger_modificar_plato)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def patch(self, request, id):
             return self.modificarAPIView(request, id)
 
@@ -42,6 +54,9 @@ class modificarPlatoAPIView(APIView):
 class eliminarPlatoAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_plato)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def delete(self, request, id):
         serializador_platos = SerializadorPlato()
         serializador_platos.eliminar(id)

@@ -6,6 +6,8 @@ from prefitprepareapp.swaggerEjemplos.ingrediente import *
 from drf_yasg.utils import swagger_auto_schema
 from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
+from prefitprepareapp.servicios.http import levantar_404_si_falla, levantar_400_si_nombre_vacio,  levantar_400_si_integridad_falla
+
 
 
 class listarIngredientesAPIView(APIView):
@@ -18,6 +20,9 @@ class listarIngredientesAPIView(APIView):
 class crearIngredienteAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_ingrediente)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def post(self, request):
         serializador_ingrediente= SerializadorIngrediente()
         nuevo_ingrediente = serializador_ingrediente.crear(**request.data)
@@ -25,9 +30,17 @@ class crearIngredienteAPIView(APIView):
 
 class modificarIngredienteAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
+
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     @swagger_auto_schema(**swagger_modificar_ingrediente)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
+
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     @swagger_auto_schema(**swagger_modificar_ingrediente)
     def patch(self, request, id):
             return self.modificarAPIView(request, id)
@@ -40,6 +53,9 @@ class modificarIngredienteAPIView(APIView):
 class eliminarIngredienteAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_ingrediente)
+    @levantar_400_si_integridad_falla
+    @levantar_400_si_nombre_vacio
+    @levantar_404_si_falla
     def delete(self, request, id):
         serializador_ingrediente = SerializadorIngrediente()
         serializador_ingrediente.eliminar(id)
