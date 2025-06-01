@@ -45,6 +45,16 @@ INSTALLED_APPS = [
     'djoser'
 ]
 
+DJOSER = {
+    'SERIALIZERS': {
+        'user_create': 'prefitprepareapp.serializadores.CrearUsuarioSerializador',
+        #Serializador usado para mostrar datos de un usuario
+        'user': 'prefitprepareapp.serializadores.CrearUsuarioSerializador',
+        #Devolver usuario que está autenticado en la sesión
+        'current_user': 'prefitprepareapp.serializadores.CrearUsuarioSerializador',
+    },
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
