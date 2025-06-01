@@ -13,7 +13,7 @@ class listarPersonaTipoAPIView(APIView):
     def get(self, request):
         servicio = ServicioSerializadorBase()
         serializador_tipo_persona = SerializadorTipoPersona(servicio.conseguir_objetos_modelo(TipoPersona), many=True)
-        return Response(serializador_tipo_persona .data)
+        return Response(serializador_tipo_persona.data)
 
 class crearPersonaTipoAPIView(APIView):
     permission_classes = [EsUsuarioConPermisos]

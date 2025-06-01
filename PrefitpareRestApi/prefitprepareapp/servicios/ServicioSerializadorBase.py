@@ -3,7 +3,7 @@ from prefitprepareapp.models import Categoria
 from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.models import Plato
 from prefitprepareapp.models import Ingrediente
-from .http import levantar_404_si_falla
+from .http import levantar_404_si_falla, levantar_400_si_nombre_vacio
 
 
 class ServicioSerializadorBase:
@@ -15,7 +15,7 @@ class ServicioSerializadorBase:
         'Ingrediente': ['categorias'],
     }
 
-    @levantar_404_si_falla
+
     def crear(self, kwargs, modelo):
 
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
@@ -28,7 +28,6 @@ class ServicioSerializadorBase:
 
         return self.gestor_bd.crear_objeto(datos_instancia)
 
-    @levantar_404_si_falla
     def modificar(self, id, kwargs, modelo):
 
         relaciones_nm = self.construir_objetos_fk(kwargs, modelo)
@@ -57,9 +56,8 @@ class ServicioSerializadorBase:
 
         nombres_fk = [diccionario.get('nombre') for diccionario in lista_diccionarios_fk]
 
-        return self.gestor_bd.get_lista_objetos(modelo, nombres_fk)
+        return self.gestor_bd.get_objetos_por_nombres(modelo, nombres_fk)
 
-    @levantar_404_si_falla
     def eliminar(self, id, modelo):
         self.gestor_bd.eliminar_objeto(id, modelo)
 
