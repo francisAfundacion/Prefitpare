@@ -4,18 +4,18 @@ from prefitprepareapp.models import Plato
 from prefitprepareapp.serializadores.SerializadorPlato import SerializadorPlato
 from prefitprepareapp.swaggerEjemplos.plato import *
 from drf_yasg.utils import swagger_auto_schema
-
+from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 
 class listarPlatosAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_platos)
     def get(self, request):
-
         lista_platos = Plato.objects.all()
         serializador_platos = SerializadorPlato(lista_platos, many=True)
         return Response(serializador_platos.data)
 
 
 class crearPlatoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_plato)
     def post(self, request):
         serializador_platos = SerializadorPlato()
@@ -23,6 +23,7 @@ class crearPlatoAPIView(APIView):
         return Response({'id': nuevo_plato.id, "mensaje": "Plato creado con éxito."}, status=201)
 
 class modificarPlatoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_modificar_plato)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
@@ -37,6 +38,7 @@ class modificarPlatoAPIView(APIView):
         return Response({"plato_id": plato_modif.id, "nombre_nuevo": plato_modif.nombre, "mensaje":"El plato ha sido actualizado con éxito."}, status=200)
 
 class eliminarPlatoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_plato)
     def delete(self, request, id):
         serializador_platos = SerializadorPlato()

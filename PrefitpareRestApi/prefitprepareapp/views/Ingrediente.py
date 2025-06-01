@@ -4,7 +4,7 @@ from prefitprepareapp.models import Ingrediente
 from prefitprepareapp.serializadores.SerializadorIngrediente import SerializadorIngrediente
 from prefitprepareapp.swaggerEjemplos.ingrediente import *
 from drf_yasg.utils import swagger_auto_schema
-
+from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 
 class listarIngredientesAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_ingredientes)
@@ -14,6 +14,7 @@ class listarIngredientesAPIView(APIView):
         return Response(serializador_ingrediente.data)
 
 class crearIngredienteAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_ingrediente)
     def post(self, request):
         serializador_ingrediente= SerializadorIngrediente()
@@ -21,6 +22,7 @@ class crearIngredienteAPIView(APIView):
         return Response({'id': nuevo_ingrediente.id, "mensaje": "Ingrediente creado con éxito."}, status=201)
 
 class modificarIngredienteAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_modificar_ingrediente)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
@@ -34,8 +36,9 @@ class modificarIngredienteAPIView(APIView):
         return Response({"categoria_id": categoria_modif.id, "nombre_nuevo": categoria_modif.nombre, "mensaje":"El ingrediente ha sido actualizado con éxito."}, status=200)
 
 class eliminarIngredienteAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_ingrediente)
     def delete(self, request, id):
         serializador_ingrediente = SerializadorIngrediente()
         serializador_ingrediente.eliminar(id)
-        return Response({"id": id, "mensaje": "Ingrediente eliminada con éxito."})
+        return Response({"id": id, "mensaje": "Ingrediente eliminado con éxito."})

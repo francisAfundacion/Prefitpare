@@ -13,6 +13,6 @@ class EsAdmin(BasePermission):
         return presenta_permisos(request)
 
 def presenta_permisos(request):
-    return request.user.is_authenticated and request.user.tipo in ["asesor", "admin"]
+    return request.user.is_authenticated and request.user.rol in ["asesor", "admin"]
 
 

@@ -4,6 +4,7 @@ from prefitprepareapp.models import TipoPersona
 from prefitprepareapp.serializadores.SerializadorTipoPersona import SerializadorTipoPersona
 from prefitprepareapp.swaggerEjemplos.tipo_persona import *
 from drf_yasg.utils import swagger_auto_schema
+from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 
 class listarPersonaTipoAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_tipos_persona)
@@ -13,6 +14,7 @@ class listarPersonaTipoAPIView(APIView):
         return Response(serializador_persona_tipo.data)
 
 class crearPersonaTipoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_tipo_persona)
     def post(self, request):
         serializador_persona_tipo =  SerializadorTipoPersona()
@@ -20,6 +22,7 @@ class crearPersonaTipoAPIView(APIView):
         return Response({'id': nuevo_tipo_persona.id, "mensaje": "Tipo de persona creado con éxito."}, status=201)
 
 class modificarPersonaTipoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_modificar_tipo_persona)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
@@ -33,6 +36,7 @@ class modificarPersonaTipoAPIView(APIView):
         return Response({"categoria_id": persona_tipo_modif.id, "nombre_nuevo": persona_tipo_modif.nombre, "mensaje":"El tipo de persona ha sido actualizado con éxito."}, status=200)
 
 class eliminarPersonaTipoAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_tipo_persona)
     def delete(self, request, id):
         serializador_persona_tipo =  SerializadorTipoPersona()

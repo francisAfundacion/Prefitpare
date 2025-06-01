@@ -7,11 +7,11 @@ class UsuarioPersonalizado(AbstractUser):
         ('asesor', 'Asesor'),
         ('estandar','Estandar')
     ]
-    telefono = models.CharField( max_length=9),
-    nombre = models.CharField( max_length=50),
-    rol = models.CharField( choices=ROLES, default='estandar'),
+    telefono = models.CharField( max_length=9)
+    nombre = models.CharField( max_length=50)
+    rol = models.CharField( choices=ROLES, default='estandar')
     #A futuro tendremos una imagen de perfil por defecto.
-    Imagen_perfil = models.URLField( null=True, blank=True)
+    imagen_perfil = models.URLField( null=True, blank=True)
 
     # Añadir related_name para evitar conflictos
     groups = models.ManyToManyField(
