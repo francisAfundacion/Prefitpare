@@ -1,0 +1,1 @@
+from .usuariosPermisos import EsUsuarioConPermisos

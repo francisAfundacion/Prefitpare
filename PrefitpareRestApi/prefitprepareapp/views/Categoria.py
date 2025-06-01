@@ -4,6 +4,7 @@ from prefitprepareapp.models import Categoria
 from prefitprepareapp.serializadores.SerializadorCategoria import SerializadorCategoria
 from prefitprepareapp.swaggerEjemplos.categoria import *
 from drf_yasg.utils import swagger_auto_schema
+from prefitprepareapp.permisos.usuariosPermisos import EsUsuarioConPermisos
 
 class listarCategoriasAPIView(APIView):
     @swagger_auto_schema(**swagger_listar_categorias)
@@ -13,6 +14,7 @@ class listarCategoriasAPIView(APIView):
         return Response(serializador_categoria.data)
 
 class crearCategoriaAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_crear_categoria)
     def post(self, request):
         serializador_categoria = SerializadorCategoria()
@@ -20,6 +22,7 @@ class crearCategoriaAPIView(APIView):
         return Response({'id': nueva_categoria.id, "mensaje": "Categoría creada con éxito."}, status=201)
 
 class modificarCategoriaAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_modificar_categoria)
     def put(self, request, id):
             return self.modificarAPIView(request, id)
@@ -33,6 +36,7 @@ class modificarCategoriaAPIView(APIView):
         return Response({"categoria_id": categoria_modif.id, "nombre_nuevo": categoria_modif.nombre, "mensaje":"El producto ha sido actualizado con éxito."}, status=200)
 
 class eliminarCategoriaAPIView(APIView):
+    permission_classes = [EsUsuarioConPermisos]
     @swagger_auto_schema(**swagger_eliminar_categoria)
     def delete(self, request, id):
         serializador_categoria = SerializadorCategoria()

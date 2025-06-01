@@ -24,6 +24,7 @@ from prefitprepareapp.views.Categoria import *
 from prefitprepareapp.views.Ingrediente import *
 from prefitprepareapp.views.TipoPersona import *
 from prefitprepareapp.views.Plato import *
+from django.urls import path, include
 
 
 
@@ -40,6 +41,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('auth/', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),  # Login, logout y registro con token
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('listar/categorias', listarCategoriasAPIView.as_view(), name='listar-categorias'),
     path('crear/categoria', crearCategoriaAPIView.as_view(), name='crear-categoria'),
