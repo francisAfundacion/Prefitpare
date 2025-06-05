@@ -12,4 +12,3 @@ class ModeloBase(models.Model):
     @abstractmethod
     def __str__(self):
         pass
-

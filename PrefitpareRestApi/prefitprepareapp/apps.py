@@ -4,5 +4,5 @@ class PrefitprepareappConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'prefitprepareapp'
 
-    def ready(self):
+    def ready(self): #Se ejecuta al inicializar la app
         import prefitprepareapp.signals
