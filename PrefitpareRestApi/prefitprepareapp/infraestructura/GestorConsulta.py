@@ -50,9 +50,9 @@ class GestorConsulta:
             return objeto
 
         for relacion_nm, lista_objetos in relaciones.items():
-            #dame la relacion de este objeto
+            # Dame la relacion de este objeto
             relacion = getattr(objeto, relacion_nm)
-            #ya tengo la ref, entonces hago el cambio sin indicar explicitamente el objeto
+            # Ya tengo la ref, entonces hago el cambio sin indicar explícitamente el objeto
             relacion.set(lista_objetos)
 
         return objeto
@@ -107,7 +107,7 @@ class GestorConsulta:
                 setattr(objeto, nombre_campo, kwargs[nombre_campo] )
         self.modificar_campos_nm(modelo, objeto,  kwargs, datos_fk)
 
-    def modificar_campos_nm(self, objeto, datos_fk):
+    def modificar_campos_nm(self, modelo, objeto, kwargs,  datos_fk):
         """
             Actualiza las relaciones many-to-many de una instancia.
 
