@@ -6,7 +6,7 @@ from prefitprepareapp.servicios.ServicioSignal import ServicioSignal
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
-def create_auth_token(sender, instance=None, created=False):
+def create_auth_token(sender, instance=None, created=False, **kwargs):
     """
        Señal que se ejecuta automáticamente tras guardar un usuario definido en AUTH_USER_MODEL.
        Cuando el usuario es creado. Se delega la creación del token de autenticación al ServicioSignal.
