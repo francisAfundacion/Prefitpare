@@ -6,4 +6,3 @@ admin.site.register(Ingrediente)
 admin.site.register(TipoPersona)
 admin.site.register(Categoria)
 admin.site.register(Plato)
-

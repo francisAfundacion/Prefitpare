@@ -7,11 +7,15 @@ from prefitprepareapp.models import Ingrediente
 from prefitprepareapp.servicios.ServicioSerializadorBase import ServicioSerializadorBase
 from prefitprepareapp.infraestructura.GestorConsulta import GestorConsulta
 
-# Agregar comprobacion de existencia de los registros post, put, patch
-# Comprobar si no encontrado
-# TO-DO => SIMPLIFICAR Y HACERLO MÁS LEGIBLE EL CÓDIGO
-
 class SerializadorBase(serializers.ModelSerializer):
+    """
+    Serializador base que proporciona una interfaz común para operaciones CRUD genéricas a través de un servicio.
+    Por otra parte cumple los siguientes propósitos:
+
+    1. Formateo bidireccional de datos.
+
+    2. Delega al servicio el método http solicitado y la referencia del modelo asociado.
+    """
 
     servicio = ServicioSerializadorBase()
 
