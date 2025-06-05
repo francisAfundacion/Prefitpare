@@ -20,12 +20,43 @@ class SerializadorBase(serializers.ModelSerializer):
     servicio = ServicioSerializadorBase()
 
     def crear(self, **kwargs):
+        """
+        Proxy que delega la creación del objeto a la capa de servicio
+
+        Parámetros:
+            **kwargs: Diccionario descomprimido con los campos para crear la instancia.
+            Model: referencia modelo asociado a la petición http
+
+        Retorna:
+            Instancia creada del modelo correspondiente.
+        """
         return self.servicio.crear(kwargs, self.Meta.model)
 
     def modificar(self, id, **kwargs):
+        """
+         Proxy que delega la modificación del objeto al método modificar de la capa de servicio.
+
+         Parámetros:
+             **kwargs: Diccionario descomprimido con los campos para modificar la instancia.
+             id (int): Identificador del objeto  a modificar.
+             Model: referencia modelo asociado a la petición http
+
+         Retorna:
+             Instancia  del modelo modificado correspondiente.
+         """
         return self.servicio.modificar(id, kwargs, self.Meta.model)
 
     def eliminar(self, id):
+        """
+          Proxy que delega la elminación  del objeto al método eliminar de la  capa de servicio.
+
+          Parámetros:
+              id (int): Identificador del objeto a modificar.
+              Model: referencia modelo asociado a la petición http.
+
+          Retorna:
+              Detalle del objeto eliminado.
+          """
         return self.servicio.eliminar(id, self.Meta.model)
 
 
