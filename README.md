@@ -71,30 +71,6 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
 
     Luego, **copiar la clave pública** generada y pegarla en la sección de claves SSH de Github.
 
-### Comandos necesarios para trabajar con el proyecto:
-
-1. Crear un **superusuario** para gestionar el administrador de Django:
-    ```bash
-    python manage.py createsuperuser
-    ```
-
-2. Trasladar cambios de la base de datos:
-
-    - Posicionarse en el directorio:
-    ```bash
-    C:\Users\Francisco\Desktop\Prefitpare\PrefitpareRestApi
-    ```
-
-    - Crear los archivos de migración:
-    ```bash
-    python manage.py makemigrations
-    ```
-
-    - Aplicar las migraciones (esto debe hacerse la primera vez que se baja el repositorio):
-    ```bash
-    python manage.py migrate
-    ```
-
 ### Uso del entorno virtual:
 
 1. **Crear entorno virtual** en la raíz del proyecto:
@@ -127,6 +103,30 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
    ```bash
    pip install drf_yasg
    ```
+      ```bash
+   pip install djoser
+   ```
+   ### Comandos necesarios para trabajar con el proyecto:
+ Para hacer uso de comandos durante el desarollo, se precisa posicionarse en la ruta dónde se halla el manage.py
+    ```bash
+     cd PrefitpareRestApi
+    ```
+ Crear un **superusuario** para gestionar el administrador de Django:
+    ```bash
+    python manage.py createsuperuser
+    ```
+ Preparar los cambios contra la base de datos (se crean los archivos de migración):
+    ```bash
+    python manage.py makemigrations
+    ```
+Aplicar las migraciones (Se debe de hacer la primera vez que se baja el repostiorio)
+    ```bash
+    python manage.py migrate
+    ```
+Correr el servidor local por defecto de django
+    ```bash
+    python manage.py runserver
+    ```
 
 ## Personas Desarrolladoras
 
