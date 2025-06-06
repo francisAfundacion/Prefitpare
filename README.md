@@ -22,8 +22,17 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
 ![Django Framework](https://img.shields.io/badge/Framework-Django-blue?style=plastic)
 
 ### Django
-- ![Swagger](https://img.shields.io/badge/Swagger%20-drf_yasg-orange?style=plastic&labelColor=Grey)
+- ![Swagger](https://img.shields.io/badge/Swagger%20-drf_yasg-orange?style=plastic&labelColor=grey)
 - ![Authentication](https://img.shields.io/badge/Authentication-rest_framework.authtoken-green?style=plastic&labelColor=red)
+- ![REST Framework](https://img.shields.io/badge/REST_Framework-django--rest--framework-lightgrey?style=plastic&labelColor=black)
+- ![Djoser](https://img.shields.io/badge/Auth%20Library-djoser-blueviolet?style=plastic&labelColor=black)
+
+### Base de datos
+- ![SQLite3](https://img.shields.io/badge/Database-SQLite3-blue?style=plastic&labelColor=black)
+  
+### Entorno virtual
+- ![VirtualEnv](https://img.shields.io/badge/Environment-VirtualEnv-informational?style=plastic&labelColor=black)
+
 
 ## Estado Del Proyecto
 
@@ -31,8 +40,10 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
 
 ## Funcionalidades
 
-1. Gestión **CRUD** sobre las entidades categoria, plato, ingrediente y tipo de persona sin contemplar autenticación.
+1. Implementación de operaciones CRUD sobre las entidades Categoría, Plato, Ingrediente y Tipo de Persona mediante endpoints protegidos por autenticación. Solo los usuarios con rol de asesor o administrador tienen acceso a estos recursos.
 
+2. Swagger, para generar documentación dinámica de los endpoints de la RestApi.
+   
 ## Tecnologías Utilizadas
 
 1. Python
@@ -128,11 +139,19 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
     ```bash
     python manage.py runserver
     ```
+## Acceder al servidor local de django por defecto
+1. Una vez que el servidor esté en ejecución, abre tu navegador y visita la siguiente URL para acceder a la API:
+   ```bash
+   http://127.0.0.1:8000/
+    ```
+2. Si se desea conocer en detalle el funcionamiento de algún endpoint en particular, visite el swagger de Prefitpare:
+   ```bash
+   http://127.0.0.1:8000/swagger
+   ```
 
 ## Personas Desarrolladoras
 
 ### Francisco Gómez Segura
-![Francisco Gómez](https://github.com/user-attachments/assets/177d09ae-c773-4833-b830-3cd9fa5db213)
 
 ## Licencia
 
