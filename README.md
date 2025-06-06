@@ -127,7 +127,7 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
     ```bash
     python manage.py makemigrations
     ```
-3. Aplicar las migraciones (Se debe de hacer la primera vez que se baja el repostiorio)
+3. Aplicar las migraciones (Se debe de hacer la primera vez que se baja el repositorio)
     ```bash
     python manage.py migrate
     ```
