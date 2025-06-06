@@ -42,6 +42,7 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
 5. Sqlite3
 6. rest_framework.authToken
 7. VirtualEnv
+8. djoser
 
 ## Acceso al Proyecto
 
@@ -106,22 +107,22 @@ El proyecto en desarrollo **PrefitPare**, pretende crear un servicio API REST. E
       ```bash
    pip install djoser
    ```
-   ### Comandos necesarios para trabajar con el proyecto:
+### Comandos necesarios para trabajar con el proyecto:
  1. Para hacer uso de comandos durante el desarollo, se precisa posicionarse en la ruta dónde se halla el manage.py
     ```bash
      cd PrefitpareRestApi
     ```
-2. Crear un **superusuario** para gestionar el administrador de Django:
-    ```bash
-    python manage.py createsuperuser
-    ```
- 3. Preparar los cambios contra la base de datos (se crean los archivos de migración):
+ 2. Preparar los cambios contra la base de datos (se crean los archivos de migración):
     ```bash
     python manage.py makemigrations
     ```
-4. Aplicar las migraciones (Se debe de hacer la primera vez que se baja el repostiorio)
+3. Aplicar las migraciones (Se debe de hacer la primera vez que se baja el repostiorio)
     ```bash
     python manage.py migrate
+    ```
+4. Crear un **superusuario** para gestionar el administrador de Django:
+    ```bash
+    python manage.py createsuperuser
     ```
 5. Correr el servidor local por defecto de django
     ```bash
